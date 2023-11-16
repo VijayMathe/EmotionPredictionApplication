@@ -3,12 +3,20 @@ from flask import Response
 import pickle
 import numpy as np
 import pandas as pd
+import os
 
 application = Flask(__name__)
 app = application
 
 # scaler = pickle.load(open("/config/workspace/Model/standardScalar.pkl", "rb"))
-model =  pickle.load(open("Model\RF_58.pkl", "rb"))
+# model =  pickle.load(open("Model\RF_58.pkl", "rb"))
+model_path = os.path.join("Model", "RF_58.pkl")
+
+try:
+    with open(model_path, "rb") as model_file:
+        model = pickle.load(model_file)
+except FileNotFoundError:
+    print(f"Error: Model file '{model_path}' not found.")
 
 ## Rout for home page
 
